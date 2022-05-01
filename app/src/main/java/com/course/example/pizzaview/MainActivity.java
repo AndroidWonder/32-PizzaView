@@ -38,26 +38,15 @@ public class MainActivity extends AppCompatActivity {
             String username = "harry";
             String password = "harry";
 
-            try { //load driver into VM memory
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                Log.e("JDBC", "Did not load driver");
-
-            }
 
             Statement stmt = null;
-            Connection con=null;
-            try { //create connection and statement objects
-                con = DriverManager.getConnection (
+
+            try (Connection con = DriverManager.getConnection (
                         URL,
                         username,
-                        password);
+                        password);) {
                 stmt = con.createStatement();
-            } catch (SQLException e) {
-                Log.e("JDBC", "problem connecting");
-            }
 
-            try {
                 //get pizza data
                 ResultSet result = stmt.executeQuery("select * from cs280data;");
 
@@ -87,16 +76,9 @@ public class MainActivity extends AppCompatActivity {
                         ": "+e.getMessage());
             }
 
-            finally {
-                try { //close may throw checked exception
-                    if (con != null)
-                        con.close();
-                } catch(SQLException e) {
-                    Log.e("JDBC", "close connection failed");
-                }
             };
 
-        }
+
     };
 
 }
