@@ -32,7 +32,7 @@ public class GraphData extends Activity {
 		pizzalist = (ArrayList<Pizza>) getIntent().getSerializableExtra("list");
 
 		//set limit on how many columns to display
-		int limit = 7;
+		int limit = pizzalist.size();
 
 		String[] programmer = new String[limit];
 		int[] pizzas = new int[limit];
@@ -52,15 +52,15 @@ public class GraphData extends Activity {
 
 		GraphView graph = (GraphView) findViewById(R.id.graph);
 		BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
-
-		// styling
+/*
+		// styling - different color on each bar
 		series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
 			@Override
 			public int get(DataPoint data) {
 				return Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100);
 			}
 		});
-
+*/
 		series.setSpacing(50);
 		series.setTitle("pizza");
 		graph.getLegendRenderer().setVisible(true);
@@ -74,10 +74,16 @@ public class GraphData extends Activity {
 		// label X axis
 		StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
 		staticLabelsFormatter.setHorizontalLabels(programmer);
+		graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
 		graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
 		graph.getViewport().setScrollable(true); // enables horizontal scrolling
 		graph.getViewport().setScrollableY(true); // enables vertical scrolling
+
+		//set max amd min on Y axis
+		graph.getViewport().setMinY(0);
+		graph.getViewport().setMaxY(10);
+		graph.getViewport().setYAxisBoundsManual(true);
 
 		//graph.getViewport().setScalable(true); // enables horizontal zooming and scrolling
 		// graph.getViewport().setScalableY(true); // enables vertical zooming and scrolling
