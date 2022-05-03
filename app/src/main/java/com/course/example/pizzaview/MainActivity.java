@@ -5,7 +5,7 @@ package com.course.example.pizzaview;
     A second activity plots the data using a Column Chart.
  */
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
